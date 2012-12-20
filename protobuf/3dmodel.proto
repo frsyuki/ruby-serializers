@@ -1,0 +1,9 @@
+message Proto3DModelFrame {
+    repeated double array = 1;
+}
+
+message Proto3DModel {
+    repeated double cube = 1;
+    repeated double texCoords = 2;
+    repeated Proto3DModelFrame frames = 3;
+}

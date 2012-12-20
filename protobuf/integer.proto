@@ -1,0 +1,3 @@
+message ProtoInteger {
+  repeated int32 array = 1;
+}

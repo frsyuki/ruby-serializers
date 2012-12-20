@@ -1,0 +1,6 @@
+message ProtoImage {
+    required string name = 1;
+    required string user = 2;
+    required int32 format = 3;
+    required bytes data = 4;
+}
