@@ -7,6 +7,12 @@ require 'oj'
 require 'bson'
 
 def measure(name, sers, desers, count=5000)
+  if ENV['WEIGHT'] =~ /light/i
+    count /= 10
+  elsif ENV['WEIGHT'] =~ /tiny/i
+    count /= 100
+  end
+
   keys = sers.keys
 
   base = sers['json'].call
