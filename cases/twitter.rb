@@ -45,5 +45,5 @@ desers['bson'] = proc { BSON.deserialize(bson) }
 # protobuf can't serialize dynamic objects
 
 
-measure('twitter', sers, desers, 200000)
+measure('twitter', sers, desers, 20000)
 

@@ -54,5 +54,5 @@ protoc = proto.class
 desers['protobuf'] = proc { protoc.new.parse_from_string(protobuf) }
 
 
-measure('integer', sers, desers, 25000)
+measure('integer', sers, desers, 2500)
 

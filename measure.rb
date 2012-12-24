@@ -18,8 +18,8 @@ end
 def measure(name, sers, desers, count=5000)
   if ENV['WEIGHT'] =~ /light/i
     count /= 10
-  elsif ENV['WEIGHT'] =~ /tiny/i
-    count /= 100
+  elsif ENV['WEIGHT'] =~ /heavy/i
+    count *= 10
   end
 
   n = 2

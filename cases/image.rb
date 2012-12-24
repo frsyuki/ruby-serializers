@@ -80,5 +80,5 @@ protoc = proto.class
 desers['protobuf'] = proc { protoc.new.parse_from_string(protobuf) }
 
 
-measure('image', sers, desers, 250000)
+measure('image', sers, desers, 25000)
 
