@@ -13,10 +13,9 @@ def measure(name, sers, desers, count=5000)
     count /= 100
   end
 
-  if ENV['ONCE'] =~ /.+/
-    bm = :bm
-  else
-    bm = :bmbm
+  n = 2
+  if nloop = ENV['LOOP']
+    n = nloop.to_i
   end
 
   if exclude = ENV['EXCLUDE']
@@ -37,28 +36,34 @@ def measure(name, sers, desers, count=5000)
   puts "case #{name}: #{base[0,20]}..."
 
   keys.each do |key|
+    next if exclude && exclude.include?(key)
+    next if only && !only.include?(key)
     bin = sers[key].call
     sz = bin.bytesize
     puts "%-10s %8s bytes  (%.2f%%)" % [key, sz, sz.to_f/basesz*100]
   end
 
-  puts "serializing #{count} loop:"
-  Benchmark.send(bm, 10) do |x|
-    keys.each do |key|
-      next if exclude && exclude.include?(key)
-      next if only && !only.include?(key)
-      ser = sers[key]
-      x.report(key) { count.times(&ser); GC.start }
+  n.times do |i|
+    puts "serializing #{count} loop #{i+1}/#{n}:"
+    Benchmark.bm(10) do |x|
+      keys.each do |key|
+        next if exclude && exclude.include?(key)
+        next if only && !only.include?(key)
+        ser = sers[key]
+        x.report(key) { count.times(&ser); GC.start }
+      end
     end
   end
 
-  puts "deserializing #{count} loop:"
-  Benchmark.send(bm, 10) do |x|
-    keys.each do |key|
-      next if exclude && exclude.include?(key)
-      next if only && !only.include?(key)
-      deser = desers[key]
-      x.report(key) { count.times(&deser); GC.start }
+  n.times do |i|
+    puts "deserializing #{count} loop #{i+1}/#{n}:"
+    Benchmark.bm(10) do |x|
+      keys.each do |key|
+        next if exclude && exclude.include?(key)
+        next if only && !only.include?(key)
+        deser = desers[key]
+        x.report(key) { count.times(&deser); GC.start }
+      end
     end
   end
 end
