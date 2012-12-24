@@ -13,6 +13,20 @@ def measure(name, sers, desers, count=5000)
     count /= 100
   end
 
+  if ENV['ONCE'] =~ /.+/
+    bm = :bm
+  else
+    bm = :bmbm
+  end
+
+  if exclude = ENV['EXCLUDE']
+    exclude = exclude.split(",").map {|x| x.strip }
+  end
+
+  if only = ENV['ONLY']
+    only = only.split(",").map {|x| x.strip }
+  end
+
   keys = sers.keys
 
   base = sers['json'].call
@@ -29,16 +43,20 @@ def measure(name, sers, desers, count=5000)
   end
 
   puts "serializing #{count} loop:"
-  Benchmark.bmbm(10) do |x|
+  Benchmark.send(bm, 10) do |x|
     keys.each do |key|
+      next if exclude && exclude.include?(key)
+      next if only && !only.include?(key)
       ser = sers[key]
       x.report(key) { count.times(&ser); GC.start }
     end
   end
 
   puts "deserializing #{count} loop:"
-  Benchmark.bmbm(10) do |x|
+  Benchmark.send(bm, 10) do |x|
     keys.each do |key|
+      next if exclude && exclude.include?(key)
+      next if only && !only.include?(key)
       deser = desers[key]
       x.report(key) { count.times(&deser); GC.start }
     end
