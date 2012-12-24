@@ -1,5 +1,10 @@
 <h2><%=h name %></h2>
-<p>
+<dl>
+  <dt>measured at</dt><dd><%=h time %></p></dd>
+  <dt>ruby</td><dd><%=h rbver %></p></dd>
+  <dt>sample</td><dd><%=h sample %></p></dd>
+</dl>
+<div>
 <img src="<%=
 "http://chart.googleapis.com/chart?" + [
   "chxt=x,y",
@@ -9,13 +14,13 @@
   "chco=9E5152,575696",
   "chds=0,#{ keys.map {|k| sers[k].total }.max }",
   "chxr=0,0,#{ keys.map {|k| sers[k].total }.max }",
-  "chd=t:#{h keys.map {|k| sers[k].total }.join(',') }|#{h keys.map {|k| desers[k].total }.join(',') }",
+  "chd=t:#{e keys.map {|k| sers[k].total }.join(',') }|#{e keys.map {|k| desers[k].total }.join(',') }",
   "chdl=serialize|deserialize",
   "chg=12,0",
-  "chtt=#{h name + ' speed' }",
-  "chxl=1:|#{h keys.reverse.join('|') }"
+  "chtt=#{e name + ' speed' }",
+  "chxl=1:|#{e keys.reverse.join('|') }"
 ].join('&')
-%>" width="500" height="200" alt="<%=h name + ' speed' %>" />
+%>" width="500" height="200" alt="<%=e name + ' speed' %>" />
 <img src="<%=
 "http://chart.googleapis.com/chart?" + [
   "chxt=x,y",
@@ -24,17 +29,17 @@
   "chco=876C3A",
   "chds=0,#{ keys.map {|k| sizes[k] }.max }",
   "chxr=0,0,#{ keys.map {|k| sizes[k] }.max }",
-  "chd=t:#{h keys.map {|k| sizes[k] }.join(',') }",
+  "chd=t:#{e keys.map {|k| sizes[k] }.join(',') }",
   "chdl=size",
   "chg=12,0",
-  "chtt=#{h name + ' speed' }",
-  "chxl=1:|#{h keys.reverse.join('|') }"
+  "chtt=#{e name + ' size' }",
+  "chxl=1:|#{e keys.reverse.join('|') }"
 ].join('&')
-%>" width="300" height="200" alt="<%=h name + ' size' %>" />
+%>" width="300" height="200" alt="<%=e name + ' size' %>" />
 <table>
   <tr><th></th><th>serialize</th><th>deserialize</th><th>size</th></tr>
   <% keys.each do |k| %>
   <tr><th><%=h k %></th><td><%= "%.2f" % sers[k].total %></td><td><%= "%.2f" % desers[k].total %></td><td><%= sizes[k] %></td></tr>
   <% end %>
 </table>
-</p>
+</div>

@@ -12,6 +12,11 @@ require 'bson'
 # for ERB
 def h(s)
   require 'cgi'
+  CGI.escapeHTML(s.to_s)
+end
+
+def e(s)
+  require 'cgi'
   CGI.escape(s.to_s)
 end
 
@@ -58,9 +63,12 @@ def measure(name, sers, desers, count=5000)
   base = sers['json'].call
   basesz = base.bytesize
 
-  puts Time.now
-  puts RUBY_DESCRIPTION
-  puts "case #{name}: #{base[0,20]}..."
+  time = Time.now
+  rbver = RUBY_DESCRIPTION
+  sample = "#{base[0,20]}..."
+  puts time
+  puts rbver
+  puts "case #{name}: #{sample}"
 
   report_sizes = {}
   report_sers = {}
