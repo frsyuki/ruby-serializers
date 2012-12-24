@@ -4,6 +4,17 @@ A benchamrk suite comparing serialization libraries on Ruby.
 
 Simply run `bundle exec rake` to run all test cases.
 
+# options
+
+Following environment variables control benchmark settings:
+
+  * **LOOP=** repeat benchmark. default is 2
+  * **WEIGHT=** "light": reduce count. "heavy": increase count
+  * **EXCLUDE=** comma-separated name of libraries to exclude
+  * **ONLY=** comma-separated name of libraries to include
+  * **REPORT_DIR=** path to a directory to put report html. default is ./reports
+
+
 # libraries
 
   * [json](https://rubygems.org/gems/json)
