@@ -1,4 +1,6 @@
 require 'fileutils'
+require 'rbconfig'
+ruby = File.join(RbConfig::CONFIG['bindir'], RbConfig::CONFIG['ruby_install_name'])
 here = File.dirname(File.expand_path(__FILE__))
 
 case_names = []
@@ -7,7 +9,7 @@ namespace :run do
   all = Dir["#{here}/cases/*.rb"].map do |path|
     name = File.basename(path, ".rb").to_sym
     task name do |t|
-      load path
+      sh ruby, path
     end
     name
   end
