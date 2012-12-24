@@ -12,7 +12,7 @@ require 'bson'
 # for ERB
 def h(s)
   require 'cgi'
-  CGI.escape(s)
+  CGI.escape(s.to_s)
 end
 
 def measure(name, sers, desers, count=5000)
@@ -20,6 +20,8 @@ def measure(name, sers, desers, count=5000)
     count /= 10
   elsif ENV['WEIGHT'] =~ /heavy/i
     count *= 10
+  elsif !ENV['WEIGHT'].to_s.empty?
+    raise "unknown WEIGHT setting: #{ENV['WEIGHT'].dump}"
   end
 
   n = 2
@@ -48,7 +50,7 @@ def measure(name, sers, desers, count=5000)
   erb = ERB.new(File.read(template))
 
   report = lambda do |sizes,sers,desers|
-    File.open(File.join(report_dir, name)+".html", "wb") {|f|
+    File.open("#{File.join(report_dir, name)}.html", 'wb') {|f|
       f.write erb.result(binding)
     }
   end

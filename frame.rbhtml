@@ -1,0 +1,5 @@
+<html>
+<% reports.each do |r| %>
+<p><%= r %></p>
+<% end %>
+</html>

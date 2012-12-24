@@ -1,3 +1,5 @@
+<h2><%=h name %></h2>
+<p>
 <img src="<%=
 "http://chart.googleapis.com/chart?" + [
   "chxt=x,y",
@@ -29,3 +31,10 @@
   "chxl=1:|#{h keys.reverse.join('|') }"
 ].join('&')
 %>" width="300" height="200" alt="<%=h name + ' size' %>" />
+<table>
+  <tr><th></th><th>serialize</th><th>deserialize</th><th>size</th></tr>
+  <% keys.each do |k| %>
+  <tr><th><%=h k %></th><td><%= "%.2f" % sers[k].total %></td><td><%= "%.2f" % desers[k].total %></td><td><%= sizes[k] %></td></tr>
+  <% end %>
+</table>
+</p>
